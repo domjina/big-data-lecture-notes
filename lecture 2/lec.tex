@@ -1,0 +1,74 @@
+\documentclass{article}
+
+\title{Work distribution challenges}
+\author{Dom Jina}
+\date{17 Jan 2024}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\underline{Problems with parallelism} \\
+
+\underline{count nums of each word in docs}
+\begin{itemize}
+    \item Seriel solution: create counter and update as we scan through
+    \item Process both docs at same time and add counters together as final step
+    \item Additional time merging results from pipeline
+    \item If on different machines, we need to include network transfer time
+    \item As architecture becomes more complex, we need orchestration
+\end{itemize}
+
+If a machine fails mid process, we need to reallocate the task. \\ 
+This involves getting another copy of the data that the process was using. \\ 
+The restart the task. \newline
+
+\underline{What happens if the master fails?} \newline
+What happens if we lose track of one of the machines? I.e. network error \newline
+
+\underline{What we need to consider when creating parallel architecure}
+\begin{itemize}
+    \item Load balancing
+    \item Overheads
+    \item orchestration
+\end{itemize}
+ \newpage
+
+\underline{Map reduce paradigm/framework} \newline
+\underline{Basic ideas:} \\
+Map(Key1, Value1) $\rightarrow$ List[$<$Key2, Value2$>$] \\
+Reduce(Key2, List[Value2]) $\rightarrow$ List$<$Value2$>$ \\
+
+Map a word to a list of documents that have that word - reverse index \newline
+
+Map example: Get words and count\\
+Reduce example: sum the words\\
+
+\newpage
+
+\underline{Hadoop: open source version of Map \& Reduce made by yahoo} \\
+
+\underline{Hadoop} is an implementation fo the map reduce in java along with a \underline{distributed file storage} called \underline{HDFS} \\
+\underline{HDFS} - Hadoop distributed file system \\
+
+\underline{Hadoop compute:}\\
+\begin{itemize}
+    \item Client - Software that the client uses to submit work to the hadoop cluster
+    \item Job Tracker - Recieves work and uses the name node to identify where data is located. Assigns work to task trackers
+    \item Task Tracker - Executes map and reduce tasks
+\end{itemize}
+
+\underline{Hadoop HDFS}
+\begin{itemize}
+    \item Name node - tracks location of all data held on the HDFS
+    \item Data Node - Handles storage access of the local files on the machine
+\end{itemize}
+
+\newpage
+
+\underline{hadoop versioning: W3-01} \newline
+
+
+\end{document}
